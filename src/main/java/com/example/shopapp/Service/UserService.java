@@ -27,13 +27,11 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
-    public User login(User userRequest) {
-        Optional<User> userOptional = userRepository.findByUsername(userRequest.getUsername());
-        if(userOptional.isPresent()) {
-            if(userRequest.getPassword().equals(userOptional.get().getPassword())) {
-                return userOptional.get();
-            }
-        }
-        return null;
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public void saveOneUser(User user) {
+        userRepository.save(user);
     }
 }

@@ -3,6 +3,12 @@ package com.example.shopapp.Entitities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
+import java.util.List;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
 @Entity
 @Table(name = "orders")
 @Data
@@ -20,4 +26,6 @@ public class Order {
     private double price;
     private int quantity;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    Date createdDate;
 }

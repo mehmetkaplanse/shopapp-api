@@ -3,6 +3,7 @@ package com.example.shopapp.Controller;
 import com.example.shopapp.Entitities.Order;
 import com.example.shopapp.Requests.CreateOrderRequest;
 import com.example.shopapp.Requests.UpdateOrderRequest;
+import com.example.shopapp.Responses.OrderResponse;
 import com.example.shopapp.Service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class OrderController {
 
 
     @GetMapping
-    public List<Order> getAllOrders() {
+    public List<OrderResponse> getAllOrders() {
         return orderService.getAllOrders();
     }
 

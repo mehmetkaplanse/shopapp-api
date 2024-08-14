@@ -6,10 +6,14 @@ import com.example.shopapp.Repository.OrderRepository;
 import com.example.shopapp.Repository.UserRepository;
 import com.example.shopapp.Requests.CreateOrderRequest;
 import com.example.shopapp.Requests.UpdateOrderRequest;
+import com.example.shopapp.Responses.OrderResponse;
+import com.example.shopapp.Responses.ProductResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -23,8 +27,20 @@ public class OrderService {
         this.userRepository = userRepository;
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<OrderResponse> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream().map(order -> {
+            OrderResponse response = new OrderResponse();
+            Optional<User> optionalUser = userRepository.findById(order.getUser().getId());
+            response.setId(order.getId());
+            response.setUser(optionalUser.get().getUsername());
+            response.setName(order.getName());
+            response.setPrice(order.getPrice());
+            response.setQuantity(order.getQuantity());
+            response.setCreatedDate(order.getCreatedDate());
+
+            return response;
+        }).collect(Collectors.toList());
     }
 
     public Order getOrderById(Long orderId) {
@@ -39,6 +55,7 @@ public class OrderService {
             toCreate.setName(createOrderRequest.getName());
             toCreate.setPrice(createOrderRequest.getPrice());
             toCreate.setQuantity(createOrderRequest.getQuantity());
+            toCreate.setCreatedDate(new Date());
         } else {
             throw new RuntimeException("User not found with id: " + createOrderRequest.getUser_id());
         }

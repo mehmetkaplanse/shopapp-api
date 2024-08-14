@@ -28,8 +28,4 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-    @PostMapping
-    public User login(@RequestBody User userRequest) {
-        return userService.login(userRequest);
-    }
 }

@@ -31,6 +31,7 @@ public class ProductService {
             response.setName(product.getName());
             response.setPrice(product.getPrice());
             response.setExplanation(product.getExplanation());
+            response.setImage(product.getImage());
             response.setCategory_id(product.getCategory().getId());
             return response;
         }).collect(Collectors.toList());
@@ -46,6 +47,7 @@ public class ProductService {
         toCreate.setName(productRequest.getName());
         toCreate.setPrice(productRequest.getPrice());
         toCreate.setExplanation(productRequest.getExplanation());
+        toCreate.setImage(productRequest.getImage());
 
         Optional<Category> categoryOptional = categoryRepository.findById(productRequest.getCategory_id());
         if (categoryOptional.isPresent()) {
@@ -66,6 +68,7 @@ public class ProductService {
             toUpdate.setName(updateProductRequest.getName());
             toUpdate.setPrice(updateProductRequest.getPrice());
             toUpdate.setExplanation(updateProductRequest.getExplanation());
+            toUpdate.setImage(updateProductRequest.getImage());
             toUpdate.setCategory(categoryOptional.get());
             productRepository.save(toUpdate);
             return toUpdate;
